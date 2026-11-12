@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>GitHubCopilotChinese</AssemblyName>
+    <RootNamespace>GitHubCopilotChinese</RootNamespace>
+    <Version>1.3.0</Version>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <PackageLicenseExpression>PolyForm-Noncommercial-1.0.0</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/Jensen-Yao/copilot-app-zh</RepositoryUrl>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="inject\zh-CN.js" LogicalName="GitHubCopilotChinese.inject.zh-CN.js" />
+    <Content Include="config.json"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+  </ItemGroup>
+</Project>

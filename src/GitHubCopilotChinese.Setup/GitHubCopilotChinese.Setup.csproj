@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>GitHubCopilotChinese-Setup</AssemblyName>
+    <RootNamespace>GitHubCopilotChinese.Setup</RootNamespace>
+    <Version>0.4.1</Version>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <ApplicationIcon>..\GitHubCopilotChinese\app.ico</ApplicationIcon>
+    <Product>GitHub Copilot App 中文启动器</Product>
+    <Description>GitHub Copilot App 中文启动器安装、修复、巡检与卸载工具</Description>
+    <PackageLicenseExpression>PolyForm-Noncommercial-1.0.0</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/khiqwq/github-copilot-app-chinese</RepositoryUrl>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="payload.zip" LogicalName="GitHubCopilotChinese.Setup.payload.zip" />
+  </ItemGroup>
+</Project>

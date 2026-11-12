@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 8.0.x
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Check JavaScript syntax
+        shell: pwsh
+        run: |
+          node --check .\src\GitHubCopilotChinese\inject\zh-CN.js
+          node --check .\scripts\audit-ui.mjs
+      - name: Check PowerShell syntax
+        shell: pwsh
+        run: |
+          $files = @('.\setup.ps1','.\scripts\build.ps1','.\scripts\package.ps1','.\scripts\install.ps1','.\scripts\uninstall.ps1','.\scripts\run-audit.ps1')
+          foreach ($file in $files) {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $file), [ref]$tokens, [ref]$errors) | Out-Null
+            if ($errors.Count) { $errors | ForEach-Object { Write-Error $_.Message }; exit 1 }
+          }
+      - name: Build
+        shell: pwsh
+        run: .\scripts\build.ps1
+      - name: Test installer plan
+        shell: pwsh
+        run: |
+          $fakeDir = Join-Path $env:RUNNER_TEMP 'GitHub Copilot'
+          New-Item -ItemType Directory -Force -Path $fakeDir | Out-Null
+          $fakeExe = Join-Path $fakeDir 'github.exe'
+          New-Item -ItemType File -Force -Path $fakeExe | Out-Null
+          .\setup.ps1 -Action Install -AppPath $fakeExe -Quiet -DesktopShortcut Yes -StartMenuShortcut Yes -ReplaceOriginalShortcuts No -KeepOriginalShortcut Yes -AuditShortcut Yes -LaunchAfterInstall No -SkipBuild -WhatIf
+      - name: Package
+        shell: pwsh
+        run: .\scripts\package.ps1 -SkipBuild
+      - uses: actions/upload-artifact@v7
+        with:
+          name: GitHubCopilotChinese-win-x64
+          path: |
+            artifacts/*.zip
+            artifacts/*.cmd
+            artifacts/*.exe
+            artifacts/SHA256SUMS-*.txt
