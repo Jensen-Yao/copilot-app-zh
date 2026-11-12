@@ -11,7 +11,7 @@ if (-not $node) { throw '未找到 Node.js。请安装 Node.js 18 或更高版�
 try {
     & $node.Source $scriptPath
     if ($LASTEXITCODE -ne 0) { throw "巡检脚本退出代码：$LASTEXITCODE" }
-    $report = Join-Path $env:LOCALAPPDATA 'GitHubCopilotChinese\untranslated-report.txt'
+    $report = Join-Path $PSScriptRoot 'untranslated-report.txt'
     Write-Host ''
     Write-Host '巡检完成。' -ForegroundColor Green
     Write-Host "报告：$report" -ForegroundColor Cyan

@@ -52,6 +52,18 @@ powershell -File scripts/build.ps1        # 需要 .NET 8 SDK
 # 产物: dist/GitHubCopilotChinese.exe + zh-CN.js + config.json
 ```
 
+### 自定义安装目录（不装 C 盘）
+
+安装器支持 `-InstallDir` 参数，且日志/审计报告**跟随 exe 所在目录**，完全便携：
+
+```powershell
+.\setup.ps1 -Action Install -Quiet -InstallDir "D:\Tools\copilot-zh" `
+  -AppPath "F:\github-app\github.exe" -DesktopShortcut Yes -StartMenuShortcut Yes `
+  -KeepOriginalShortcut Yes -ForceCloseCopilot
+```
+
+不指定 `-InstallDir` 时默认装到 `%LOCALAPPDATA%\GitHubCopilotChinese`。
+
 把 `dist` 下三个文件放入 `%LOCALAPPDATA%\GitHubCopilotChinese\`，编辑 `config.json` 的 `appPath` 指向你的 `github.exe`，然后用任意快捷方式/命令启动该 exe 即可。
 
 ### 配置（`config.json`）

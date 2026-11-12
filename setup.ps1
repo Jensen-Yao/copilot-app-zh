@@ -6,6 +6,9 @@ param(
 
     [string]$AppPath,
 
+    # 自定义安装目录（默认 %LOCALAPPDATA%\GitHubCopilotChinese；指定后完全便携，不写 C 盘）
+    [string]$InstallDir,
+
     [ValidateSet('Ask', 'Yes', 'No')]
     [string]$DesktopShortcut = 'Ask',
 
@@ -38,7 +41,7 @@ if ((Split-Path -Leaf $PSScriptRoot) -ne 'scripts') {
 }
 $Script:DistDir = Join-Path $Script:Root 'dist'
 $Script:SourceExe = Join-Path $Script:DistDir 'GitHubCopilotChinese.exe'
-$Script:InstallDir = Join-Path $env:LOCALAPPDATA 'GitHubCopilotChinese'
+$Script:InstallDir = if ($InstallDir) { [IO.Path]::GetFullPath($InstallDir) } else { Join-Path $env:LOCALAPPDATA 'GitHubCopilotChinese' }
 $Script:InstalledExe = Join-Path $Script:InstallDir 'GitHubCopilotChinese.exe'
 $Script:InstalledConfig = Join-Path $Script:InstallDir 'config.json'
 $Script:StatePath = Join-Path $Script:InstallDir 'install-state.json'

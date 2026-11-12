@@ -17,7 +17,8 @@ internal static class Program
 {
     private const string MutexName = "Local\\GitHubCopilotChinese.Launcher";
     private static readonly HttpClient Http = new() { Timeout = TimeSpan.FromSeconds(2) };
-    private static readonly string DataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GitHubCopilotChinese");
+    // 便携模式：日志与审计报告跟随 exe 所在目录，不再写死 %LOCALAPPDATA%
+    private static readonly string DataDir = AppContext.BaseDirectory;
     private static readonly string LogPath = Path.Combine(DataDir, "launcher.log");
     private static readonly string AuditReportPath = Path.Combine(DataDir, "untranslated-report.json");
     private static readonly string AuditTextPath = Path.Combine(DataDir, "untranslated-report.txt");
